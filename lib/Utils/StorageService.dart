@@ -1,69 +1,64 @@
 import 'dart:io';
+import 'dart:async';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
-import './DataPiece.dart';
-import './Vehicle.dart';
+import 'Models.dart';
 
-class StorageService {
+class StorageService{
+  JsonStorage<Vehicle> vehicles = new JsonStorage<Vehicle>('vehicles');
+  JsonStorage<DataPiece> dataPieces = new JsonStorage<DataPiece>('datePieces');
+}
 
+class JsonStorage<T> {
+
+  String fileName;
+  Map<String,T> map = new Map<String, T>();
   File jsonFile;
-  String fileName = "data.json";
-  Map<String, Vehicle> data;
 
-  Directory directory;
-
-  StorageService(){
-    this.data = new Map<String, Vehicle>();
+  JsonStorage(String fileName){
+    this.fileName = fileName;
     getApplicationDocumentsDirectory().then((dir){
-      this.directory = dir;
-      this.jsonFile = new File(directory.path + '/' + fileName);
+
+      String fullPath = dir.path + '/' + fileName + '.json';
+      this.jsonFile = new File(fullPath);
+
       jsonFile.exists().then((val){
         if(val){
+          print(fileName + ' JSON file already exists');
           jsonFile.readAsString().then((str){
-            this.data = JSON.decode(str);
+            print('JSON file read : ' + str);
+            if(str.length > 0) this.map = JSON.decode(str);
           });
         }
         else{
+          print('JSON file does not exist');
           jsonFile.create();
         }
       });
     });
   }
 
-  Map<String, Vehicle> getAllData(){
-    return this.data;
+  Map<String,T> getAll() => map;
+
+  T get(String key) => map.containsKey(key) ? map[key] : null;
+
+  void exist(key) => this.map.containsKey(key);
+
+  Future<bool> save(String key, T value){
+    print('Saving key to ' + fileName + '.json : ' + key);
+    map[key] = value;
+    return saveToJson();
   }
 
-  Vehicle getVehicle(String name){
-    return this.data[name];
+  Future<bool> remove(key){
+    map.removeWhere((k,v) => k == key);
+    return saveToJson();
   }
 
-  List<DataPiece> getVehicleData(String name){
-    return this.data[name].data;
-  }
-
-  void saveVehicle(Vehicle newData){
-    this.data[newData.name] = newData;
-    this.jsonFile.writeAsStringSync(JSON.encode(this.data));
-  }
-
-  bool saveDataPiece(String vehicleName, DataPiece dataPiece){
-    if(this.data.containsKey(vehicleName)){
-      this.data[vehicleName].data.add(dataPiece);
-      this.jsonFile.writeAsStringSync(JSON.encode(this.data));
-    }
-    else{
-      var vehicle = new Vehicle();
-      vehicle.name = vehicleName;
-      vehicle.data = new List<DataPiece>(1);
-      vehicle.data.add(dataPiece);
-      this.data[vehicleName] = vehicle;
-      var str = JSON.encode(this.data);
-      print('[APP] data :' + str);
-      this.jsonFile.writeAsStringSync(str);
-    }
-    
-    return true;
+  Future<bool> saveToJson(){
+    return this.jsonFile.writeAsString(JSON.encode(this.map)).then((file){
+      return true;
+    });
   }
 
 }

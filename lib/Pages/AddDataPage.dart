@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../Utils/DataPiece.dart';
+import '../Utils/Models.dart';
 import '../Utils/StorageService.dart';
+import '../main.dart';
+import 'dart:core';
 
 class AddDataPage extends StatefulWidget {
 
@@ -12,6 +14,8 @@ class AddDataPage extends StatefulWidget {
 class _AddDataPage extends State<AddDataPage> {
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
+
+  StorageService storageService = AppBootsrapperBuilder.instance.environment().singleton(StorageService);
 
   DataPiece data;
 
@@ -35,11 +39,16 @@ class _AddDataPage extends State<AddDataPage> {
 
     scaffoldKey.currentState.showSnackBar(snackbar);
 
+    this.data.vehiculeKey = '208';
+    this.storageService.dataPieces.save(new DateTime.now().toIso8601String(), this.data);
+
     final snackbarOK = new SnackBar(
       content: new Text('Data successfully added !'),
     );
 
     scaffoldKey.currentState.showSnackBar(snackbarOK);
+
+    Navigator.of(context).pushNamed("/HomePage");
   }
 
   String validate(String str){
