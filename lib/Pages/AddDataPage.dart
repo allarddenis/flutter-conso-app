@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../Utils/DataPiece.dart';
+import '../Utils/StorageService.dart';
 
 class AddDataPage extends StatefulWidget {
+
   @override
   _AddDataPage createState() => new _AddDataPage();
+
 }
 
 class _AddDataPage extends State<AddDataPage> {
@@ -25,16 +28,38 @@ class _AddDataPage extends State<AddDataPage> {
   }
 
   void _performAddAction() {
-    // This is just a demo, so no actual login here.
+
     final snackbar = new SnackBar(
       content: new Text('Adding data...'),
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
+
+    final snackbarOK = new SnackBar(
+      content: new Text('Data successfully added !'),
+    );
+
+    scaffoldKey.currentState.showSnackBar(snackbarOK);
+  }
+
+  String validate(String str){
+    try {
+      var temp = double.parse(getFormatString(str));
+      return temp < 0.0 ? 'Not a positive number' : null;
+    } catch(e){
+      return 'Not a double.';
+    }
+  }
+
+  String getFormatString(String str){
+    var formatStr = str.replaceAll(',', '.');
+    if(str.indexOf('.') < 0) formatStr += '.';
+    return formatStr;
   }
 
   @override
   Widget build(BuildContext context) {
+    this.data = new DataPiece();
     return new Scaffold(
       key: scaffoldKey,
       appBar: new AppBar(title: new Text("Add data"), backgroundColor: Colors.brown,),
@@ -46,40 +71,28 @@ class _AddDataPage extends State<AddDataPage> {
           child: new Column(
             children: [
               new TextFormField(
+                keyboardType: TextInputType.number,
                 decoration: new InputDecoration(labelText: 'Quantity (in Liters)'),
-                validator: (val){
-                  try {
-                    var temp = double.parse(val.replaceAll(',', '.'));
-                    return temp < 0.0 ? 'Not a positive number' : null;
-                  } catch(e){
-                    return 'Not a double.';
-                  }
+                validator: (val) => validate(val),
+                onSaved: (val){
+                  this.setState(()=>data.quantity = double.parse(getFormatString(val)));
                 },
-                onSaved: (val) => data.quantity = double.parse(val.replaceAll(',', '.')),
               ),
               new TextFormField(
+                keyboardType: TextInputType.number,
                 decoration: new InputDecoration(labelText: 'Distance (in Km)'),
-                validator: (val){
-                  try {
-                    var temp = double.parse(val.replaceAll(',', '.'));
-                    return temp < 0.0 ? 'Not a positive number' : null;
-                  } catch(e){
-                    return 'Not a double.';
-                  }
+                validator: (val) => validate(val),
+                onSaved: (val){
+                  this.setState(()=>data.distance = double.parse(getFormatString(val)));
                 },
-                onSaved: (val) => data.distance = double.parse(val.replaceAll(',', '.')),
               ),
               new TextFormField(
+                keyboardType: TextInputType.number,
                 decoration: new InputDecoration(labelText: 'Cost (in Euros)'),
-                validator: (val){
-                  try {
-                    var temp = double.parse(val.replaceAll(',', '.'));
-                    return temp < 0.0 ? 'Not a positive number' : null;
-                  } catch(e){
-                    return 'Not a double.';
-                  }
+                validator: (val) => validate(val),
+                onSaved: (val){
+                  this.setState(()=>data.cost = double.parse(getFormatString(val)));
                 },
-                onSaved: (val) => data.cost = double.parse(val.replaceAll(',', '.')),
               ),
               new TextFormField(
                 decoration: new InputDecoration(labelText: 'Comment (<50 caracters)'),
