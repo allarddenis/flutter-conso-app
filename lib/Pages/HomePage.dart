@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.brown,
         child: new Icon(Icons.add),
         onPressed: (){
-          Navigator.of(context).pushNamed("/AddDataPage");
+          Navigator.of(context).pushNamed("/AddTransportDataPage");
         }
       ),
       body: new Container(
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
             new MyMenuCard(
               title: "Data", 
               icon: Icons.format_list_numbered,
-              route: "/AddDataPage",
+              route: "/TransportDataListPage",
             ),
             new MyMenuCard(
               title: "Vehicles", 

@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import '../Utils/Models.dart';
+import '../Utils/TransportData.dart';
 import '../Utils/StorageService.dart';
-import '../main.dart';
 import 'dart:core';
+import '../main.dart' as main;
 
-class AddDataPage extends StatefulWidget {
+class AddTransportDataPage extends StatefulWidget {
 
   @override
-  _AddDataPage createState() => new _AddDataPage();
+  _AddTransportDataPage createState() => new _AddTransportDataPage();
 
 }
 
-class _AddDataPage extends State<AddDataPage> {
+class _AddTransportDataPage extends State<AddTransportDataPage> {
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
 
-  StorageService storageService = AppBootsrapperBuilder.instance.environment().singleton(StorageService);
+  StorageService storageService;
+  TransportData data;
 
-  DataPiece data;
+  _AddTransportDataPage(){
+    storageService = main.storageService;
+  }
 
   void _submit() {
     final form = formKey.currentState;
@@ -28,6 +31,12 @@ class _AddDataPage extends State<AddDataPage> {
       // Email & password matched our validation rules
       // and are saved to _email and _password fields.
       _performAddAction();
+    } else {
+      final snackbar = new SnackBar(
+        content: new Text('Please verify inputs are correct.'),
+      );
+
+      scaffoldKey.currentState.showSnackBar(snackbar);
     }
   }
 
@@ -39,8 +48,7 @@ class _AddDataPage extends State<AddDataPage> {
 
     scaffoldKey.currentState.showSnackBar(snackbar);
 
-    this.data.vehiculeKey = '208';
-    this.storageService.dataPieces.save(new DateTime.now().toIso8601String(), this.data);
+    this.storageService.transportData.insert(data);
 
     final snackbarOK = new SnackBar(
       content: new Text('Data successfully added !'),
@@ -48,7 +56,7 @@ class _AddDataPage extends State<AddDataPage> {
 
     scaffoldKey.currentState.showSnackBar(snackbarOK);
 
-    Navigator.of(context).pushNamed("/HomePage");
+    if(Navigator.canPop(context)) Navigator.pop(context);
   }
 
   String validate(String str){
@@ -60,6 +68,15 @@ class _AddDataPage extends State<AddDataPage> {
     }
   }
 
+  String validateInt(String str){
+    try {
+      var temp = int.parse(str);
+      return temp < 0 ? 'Not a positive number' : null;
+    } catch(e){
+      return 'Not an integer.';
+    }
+  }
+
   String getFormatString(String str){
     var formatStr = str.replaceAll(',', '.');
     if(str.indexOf('.') < 0) formatStr += '.';
@@ -68,7 +85,7 @@ class _AddDataPage extends State<AddDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    this.data = new DataPiece();
+    this.data = new TransportData();
     return new Scaffold(
       key: scaffoldKey,
       appBar: new AppBar(title: new Text("Add data"), backgroundColor: Colors.brown,),
@@ -79,6 +96,14 @@ class _AddDataPage extends State<AddDataPage> {
           key: formKey,
           child: new Column(
             children: [
+              new TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: new InputDecoration(labelText: 'Vehicle'),
+                validator: (val) => validateInt(val),
+                onSaved: (val){
+                  this.setState(()=>data.vehicleId = int.parse(val));
+                },
+              ),
               new TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: new InputDecoration(labelText: 'Quantity (in Liters)'),
