@@ -60,9 +60,14 @@ create table $tableTransportData (
     });
   }
 
-  Future<TransportData> insert(TransportData data) async {
-    data.id = await db.insert(tableTransportData, data.toMap());
-    return data;
+  Future<int> insertTransportData(TransportData data) async {
+    return await db.inTransaction(() async {
+      String query = 'INSERT INTO $tableTransportData($columnVehicleId, $columnComment, $columnQuantity, $columnCost, $columnDistance) ';
+      query += 'VALUES(' + data.vehicleId.toString() + ', \"' + data.comment + '\", ' + data.quantity.toString() + ', ' + data.cost.toString() + ', ' + data.distance.toString() + ')';
+      print(query);
+      int id1 = await db.rawInsert(query);
+      print("inserted1: $id1");
+    });
   }
 
   Future<List<TransportData>> getAllTransportData() async {

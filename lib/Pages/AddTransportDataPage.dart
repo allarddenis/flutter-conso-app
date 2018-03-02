@@ -48,15 +48,15 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
 
     scaffoldKey.currentState.showSnackBar(snackbar);
 
-    this.storageService.transportData.insert(data);
+    this.storageService.transportData.insertTransportData(data).then((val){
+      final snackbarOK = new SnackBar(
+        content: new Text('Data successfully added !'),
+      );
 
-    final snackbarOK = new SnackBar(
-      content: new Text('Data successfully added !'),
-    );
+      scaffoldKey.currentState.showSnackBar(snackbarOK);
 
-    scaffoldKey.currentState.showSnackBar(snackbarOK);
-
-    if(Navigator.canPop(context)) Navigator.pop(context);
+      if(Navigator.canPop(context)) Navigator.pop(context);
+    });
   }
 
   String validate(String str){

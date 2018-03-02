@@ -12,6 +12,8 @@ final storageService = new StorageService();
 
 void main() {
 
+  storageService.setDb();
+
   material.runApp(new material.MaterialApp(
     home: new HomePage(),
     routes: <String, material.WidgetBuilder>{

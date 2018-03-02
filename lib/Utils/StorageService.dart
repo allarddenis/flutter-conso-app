@@ -5,12 +5,12 @@ import 'Vehicle.dart';
 
 class StorageService{
 
-  StorageService(){
+  setDb() async {
     print('Creating db service.');
     getApplicationDocumentsDirectory().then((dir){
       documentsDirectory = dir;
       path = documentsDirectory.path +  "/conso.db";
-      vehicles.open(path);
+      //vehicles.open(path);
       transportData.open(path);
     });
   }

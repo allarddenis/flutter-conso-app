@@ -27,6 +27,7 @@ class TransportDataListState extends State<TransportDataListPage>{
 
   @override
   void initState(){
+    getData();
   }
 
   @override
