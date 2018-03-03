@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../UI/MyMenuCard.dart';
+import '../UI/MenuCardItem.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -19,21 +19,21 @@ class HomePage extends StatelessWidget {
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            new MyMenuCard(
+            new MenuCardItem(
               title: "Statistics", 
               icon: Icons.insert_chart,
             ),
-            new MyMenuCard(
+            new MenuCardItem(
               title: "Data", 
               icon: Icons.format_list_numbered,
               route: "/TransportDataListPage",
             ),
-            new MyMenuCard(
+            new MenuCardItem(
               title: "Vehicles", 
               icon: Icons.directions_car,
               route: "/VehiclePage"
             ),
-            new MyMenuCard(
+            new MenuCardItem(
               title: "Preferences", 
               icon: Icons.settings,
             )

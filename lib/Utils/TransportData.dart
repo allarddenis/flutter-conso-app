@@ -19,6 +19,12 @@ class TransportData {
 
   TransportData();
 
+  String toTitle(){
+    return quantity.toString() + 'L  |  ' 
+      + cost.toString() + '€  |  ' 
+      + distance.toString() + 'km';
+  }
+
   Map toMap() { 
     Map map = new Map();
     map["id"] = id;

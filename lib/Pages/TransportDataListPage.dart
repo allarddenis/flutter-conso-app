@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Utils/TransportData.dart';
 import '../Utils/StorageService.dart';
+import '../UI/TransportDataListItem.dart';
 import '../main.dart' as main;
 
 class TransportDataListPage extends StatefulWidget{
@@ -46,9 +47,7 @@ class TransportDataListState extends State<TransportDataListPage>{
       body: new ListView.builder(
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index){
-          return new Card(
-            child: new Text(data[index].comment),
-          );
+          return new TransportDataListItem(data: data[index],);
         },
       ));
   }

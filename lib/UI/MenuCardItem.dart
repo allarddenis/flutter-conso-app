@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class MyMenuCard extends StatelessWidget {
+class MenuCardItem extends StatelessWidget {
 
-  MyMenuCard({ this.title, this.icon, this.route });
+  MenuCardItem({ this.title, this.icon, this.route });
 
   final String title;
   final IconData icon;
