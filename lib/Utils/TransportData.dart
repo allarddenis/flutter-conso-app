@@ -1,5 +1,4 @@
-import 'package:sqflite/sqflite.dart';
-import 'dart:async';
+import './Storable.dart';
 
 final String tableTransportData = "transportData";
 final String columnId = "id";
@@ -9,7 +8,7 @@ final String columnQuantity = "quantity";
 final String columnCost = "cost";
 final String columnDistance = "distance";
 
-class TransportData {
+class TransportData extends Storable{
   int id;
   int vehicleId;
   String comment;
@@ -18,6 +17,19 @@ class TransportData {
   double distance;
 
   TransportData();
+
+  String sqlTableName() => tableTransportData;
+
+  String sqlCreateTable() => 
+    '''
+    create table $tableTransportData ( 
+      $columnId integer primary key autoincrement, 
+      $columnVehicleId integer not null,
+      $columnComment text not null,
+      $columnQuantity real not null,
+      $columnCost real not null,
+      $columnDistance real not null)
+    ''';
 
   String toTitle(){
     return quantity.toString() + 'L  |  ' 
@@ -36,15 +48,18 @@ class TransportData {
     return map;
   } 
 
-  TransportData.fromMap(Map map) { 
+  TransportData fromMap(Map map) { 
     id = map["id"];
     vehicleId = map['vehicleId'];
     comment = map['comment'];
     quantity = map['quantity'];
     cost = map['cost'];
     distance = map['distance'];
+    return this;
   }
 }
+
+/*
 
 class TransportDataProvider {
   Database db;
@@ -53,15 +68,7 @@ class TransportDataProvider {
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
           print('Creating ' + tableTransportData);
-          await db.execute('''
-create table $tableTransportData ( 
-  $columnId integer primary key autoincrement, 
-  $columnVehicleId integer not null,
-  $columnComment text not null,
-  $columnQuantity real not null,
-  $columnCost real not null,
-  $columnDistance real not null)
-''');
+          
           print('db created');
     });
   }
@@ -109,3 +116,5 @@ create table $tableTransportData (
 
   Future close() async => db.close();
 }
+
+*/

@@ -19,7 +19,7 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
   TransportData data;
 
   _AddTransportDataPage(){
-    storageService = main.storageService;
+    storageService = new StorageService();
   }
 
   void _submit() {
@@ -48,7 +48,7 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
 
     scaffoldKey.currentState.showSnackBar(snackbar);
 
-    this.storageService.transportData.insertTransportData(data).then((val){
+    this.storageService.saveData(data).then((val){
       final snackbarOK = new SnackBar(
         content: new Text('Data successfully added !'),
       );

@@ -1,5 +1,4 @@
-import 'package:sqflite/sqflite.dart';
-import 'dart:async';
+import './Storable.dart';
 
 final String tableVehicles = "vehicles";
 final String columnId = "id";
@@ -7,13 +6,24 @@ final String columnName = "name";
 final String columnGasType = "gasType";
 final String columnAge = "age";
 
-class Vehicle {
+class Vehicle extends Storable {
   int id;
   String name;
   String gasType;
   String age;
 
   Vehicle();
+
+  String sqlTableName() => tableVehicles;
+
+  String sqlCreateTable() => 
+    '''
+    create table $tableVehicles ( 
+      $columnId integer primary key autoincrement, 
+      $columnName text not null,
+      $columnGasType text not null,
+      $columnAge text not null)
+    ''' ;
 
   Map toMap() { 
     Map map = new Map();
@@ -23,12 +33,15 @@ class Vehicle {
     return map;
   } 
 
-  Vehicle.fromMap(Map map) { 
+  Vehicle fromMap(Map map) { 
     id = map["id"];
     gasType = map['gasType'];
     age = map['age'];
+    return this;
   }
 }
+
+/*
 
 class VehicleProvider {
   Database db;
@@ -44,22 +57,6 @@ create table $tableVehicles (
   $columnAge text not null)
 ''');
     });
-  }
-
-  Future<Vehicle> insert(Vehicle vehicle) async {
-    vehicle.id = await db.insert(tableVehicles, vehicle.toMap());
-    return vehicle;
-  }
-
-  Future<List<Vehicle>> getAllVehicles() async {
-    List<Vehicle> vehicles = new List<Vehicle>();
-    await db.rawQuery('SELECT * FROM ' + tableVehicles).then((maps){
-      maps.forEach((map){
-        vehicles.add(new Vehicle.fromMap(map));
-      });
-    });
-    
-    return vehicles;
   }
 
   Future<Vehicle> getVehicle(int id) async {
@@ -84,3 +81,5 @@ create table $tableVehicles (
 
   Future close() async => db.close();
 }
+
+*/

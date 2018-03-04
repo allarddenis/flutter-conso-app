@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import '../Utils/TransportData.dart';
 import '../Utils/StorageService.dart';
 import '../UI/TransportDataListItem.dart';
-import '../main.dart' as main;
 
-class TransportDataListPage extends StatefulWidget{
+class TransportDataListPage extends StatefulWidget {
 
   @override
   TransportDataListState createState() => new TransportDataListState();
@@ -15,13 +14,11 @@ class TransportDataListState extends State<TransportDataListPage>{
 
   StorageService storageService;
   List<TransportData> data = new List<TransportData>();
+  
 
-  TransportDataListState(){
-    storageService = main.storageService;
-  }
-
-  void getData(){
-    storageService.transportData.getAllTransportData().then((sqlData){
+  void getData() async{
+    storageService = new StorageService();
+    storageService.getAll(new TransportData()).then((sqlData){
       data = sqlData;
     });
   }

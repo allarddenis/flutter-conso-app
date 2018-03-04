@@ -8,11 +8,10 @@ import 'Pages/HomePage.dart';
 import 'Pages/LoginPage.dart';
 import 'Pages/VehiclePage.dart';
 
-final storageService = new StorageService();
-
 void main() {
 
-  storageService.setDb();
+  var storageService = new StorageService();
+  var db = storageService.db;
 
   material.runApp(new material.MaterialApp(
     home: new HomePage(),
