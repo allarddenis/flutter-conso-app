@@ -33,9 +33,9 @@ class StorageService {
     return theDb;
   }
   
-
   void _onCreate(Database db, int version) async {
     await this.createTransportDataTable(db);
+    await this.createVehicleTable(db);
   }
 
   Future createTransportDataTable(Database db) async {
@@ -46,6 +46,19 @@ class StorageService {
   Future createVehicleTable(Database db) async {
     print('create vehicle data table');
     await db.execute(new Vehicle().sqlCreateTable());
+  }
+
+  Future<Storable> getDataById(Storable storable) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query(
+      storable.sqlTableName(),
+      columns: storable.sqlColumns(),
+        where: storable.sqlPrimarykeyColumn() + " = ?",
+        whereArgs: [storable.id]);
+    if (maps.length > 0) {
+      return storable.fromMap(maps.first);
+    }
+    return null;
   }
 
   Future<int> saveData(Storable storable) async {
@@ -67,4 +80,13 @@ class StorageService {
     });
     return transportData;
   }
+
+  Future<int> deleteData(Storable storable) async {
+    var dbClient = await db;
+    return await dbClient.delete(
+      storable.sqlTableName(), 
+      where: storable.sqlPrimarykeyColumn() + " = ?", whereArgs: [storable.id]
+    );
+  }
+
 }

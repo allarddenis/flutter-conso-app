@@ -14,6 +14,8 @@ class Vehicle extends Storable {
 
   Vehicle();
 
+  String sqlPrimarykeyColumn() => tableVehicles;
+  List<String> sqlColumns() => [columnId, columnName, columnGasType, columnAge];
   String sqlTableName() => tableVehicles;
 
   String sqlCreateTable() => 
@@ -40,46 +42,3 @@ class Vehicle extends Storable {
     return this;
   }
 }
-
-/*
-
-class VehicleProvider {
-  Database db;
-
-  Future open(String path) async {
-    db = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      await db.execute('''
-create table $tableVehicles ( 
-  $columnId integer primary key autoincrement, 
-  $columnName text not null,
-  $columnGasType text not null,
-  $columnAge text not null)
-''');
-    });
-  }
-
-  Future<Vehicle> getVehicle(int id) async {
-    List<Map> maps = await db.query(tableVehicles,
-        columns: [columnId, columnName, columnGasType, columnAge],
-        where: "$columnId = ?",
-        whereArgs: [id]);
-    if (maps.length > 0) {
-      return new Vehicle.fromMap(maps.first);
-    }
-    return null;
-  }
-
-  Future<int> delete(int id) async {
-    return await db.delete(tableVehicles, where: "$columnId = ?", whereArgs: [id]);
-  }
-
-  Future<int> update(Vehicle vehicle) async {
-    return await db.update(tableVehicles, vehicle.toMap(),
-        where: "$columnId = ?", whereArgs: [vehicle.id]);
-  }
-
-  Future close() async => db.close();
-}
-
-*/
