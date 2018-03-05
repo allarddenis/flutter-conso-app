@@ -55,7 +55,7 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
 
       scaffoldKey.currentState.showSnackBar(snackbarOK);
 
-      if(Navigator.canPop(context)) Navigator.pop(context);
+      if(Navigator.canPop(context)) Navigator.pop(context, true);
     });
   }
 

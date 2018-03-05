@@ -14,6 +14,8 @@ class Vehicle extends Storable {
 
   Vehicle();
 
+  int getPrimaryKey() => id;
+
   String sqlPrimarykeyColumn() => tableVehicles;
   List<String> sqlColumns() => [columnId, columnName, columnGasType, columnAge];
   String sqlTableName() => tableVehicles;

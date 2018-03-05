@@ -8,7 +8,7 @@ final String columnQuantity = "quantity";
 final String columnCost = "cost";
 final String columnDistance = "distance";
 
-class TransportData extends Storable{
+class TransportData extends Storable {
   int id;
   int vehicleId;
   String comment;
@@ -17,6 +17,8 @@ class TransportData extends Storable{
   double distance;
 
   TransportData();
+
+  int getPrimaryKey() => id;
 
   String sqlPrimarykeyColumn() => columnId;
   List<String> sqlColumns() => 
@@ -52,12 +54,13 @@ class TransportData extends Storable{
   } 
 
   TransportData fromMap(Map map) { 
-    id = map["id"];
-    vehicleId = map['vehicleId'];
-    comment = map['comment'];
-    quantity = map['quantity'];
-    cost = map['cost'];
-    distance = map['distance'];
-    return this;
+    var td = new TransportData();
+    td.id = map[columnId];
+    td.vehicleId = map[columnVehicleId];
+    td.comment = map[columnComment];
+    td.quantity = map[columnQuantity];
+    td.cost = map[columnCost];
+    td.distance = map[columnDistance];
+    return td;
   }
 }

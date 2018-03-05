@@ -54,7 +54,7 @@ class StorageService {
       storable.sqlTableName(),
       columns: storable.sqlColumns(),
         where: storable.sqlPrimarykeyColumn() + " = ?",
-        whereArgs: [storable.id]);
+        whereArgs: [storable.getPrimaryKey()]);
     if (maps.length > 0) {
       return storable.fromMap(maps.first);
     }
@@ -69,23 +69,22 @@ class StorageService {
 
   Future<List<Storable>> getAll(Storable storable) async {
     var dbClient = await db;
-    List transportData = new List();
+    List storables = new List();
     String table = storable.sqlTableName();
-    await dbClient.rawQuery('SELECT * FROM ' + table).then((maps){
-      if(maps.isNotEmpty){
-        maps.forEach((map){
-          transportData.add(storable.fromMap(map));
-        });
-      }
+    List results = await dbClient.query(table);
+    results.forEach((result){
+      var td = storable.fromMap(result);
+      storables.add(td);
     });
-    return transportData;
+    
+    return storables;
   }
 
   Future<int> deleteData(Storable storable) async {
     var dbClient = await db;
     return await dbClient.delete(
       storable.sqlTableName(), 
-      where: storable.sqlPrimarykeyColumn() + " = ?", whereArgs: [storable.id]
+      where: storable.sqlPrimarykeyColumn() + " = ?", whereArgs: [storable.getPrimaryKey()]
     );
   }
 

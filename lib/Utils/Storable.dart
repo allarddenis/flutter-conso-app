@@ -1,5 +1,5 @@
 abstract class Storable{
-  int id;
+  dynamic getPrimaryKey();
   String sqlCreateTable();
   String sqlTableName();
   String sqlPrimarykeyColumn();

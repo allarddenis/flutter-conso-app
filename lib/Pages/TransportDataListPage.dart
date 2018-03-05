@@ -26,6 +26,7 @@ class TransportDataListState extends State<TransportDataListPage>{
   @override
   void initState(){
     getData();
+    super.initState();
   }
 
   @override
@@ -38,7 +39,9 @@ class TransportDataListState extends State<TransportDataListPage>{
         backgroundColor: Colors.brown,
         child: new Icon(Icons.add),
         onPressed: (){
-          Navigator.of(context).pushNamed("/AddTransportDataPage");
+          Navigator.of(context).pushNamed("/AddTransportDataPage").then((val){
+            getData();
+          });
         }
       ),
       body: new ListView.builder(
