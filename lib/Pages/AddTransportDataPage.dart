@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../Utils/TransportData.dart';
+import '../Utils/Vehicle.dart';
 import '../Utils/StorageService.dart';
 import 'dart:core';
+
+enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
 
 class AddTransportDataPage extends StatefulWidget {
 
@@ -16,9 +19,23 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
 
   StorageService storageService;
   TransportData data;
+  List<Vehicle> vehicles = new List<Vehicle>();
 
   _AddTransportDataPage(){
     storageService = new StorageService();
+  }
+
+  void getVehicles() async{
+    storageService = new StorageService();
+    storageService.getAll(new Vehicle()).then((sqlData){
+      vehicles = sqlData;
+    });
+  }
+
+  @override
+  void initState(){
+    getVehicles();
+    super.initState();
   }
 
   void _submit() {
@@ -85,17 +102,22 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
       appBar: new AppBar(title: new Text("Add data"), backgroundColor: Colors.brown,),
       backgroundColor: Colors.brown[50],
       body: new Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(50.0),
         child: new Form(
           key: formKey,
           child: new Column(
             children: [
-              new TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: new InputDecoration(labelText: 'Vehicle'),
-                validator: (val) => validateInt(val),
-                onSaved: (val){
-                  this.setState(()=>data.vehicleId = int.parse(val));
+              new PopupMenuButton<Vehicle>(
+                initialValue: vehicles.first,
+                icon: new Icon(Icons.directions_car),
+                onSelected: (Vehicle v) { setState(() { data.vehicleId = v.id; }); },
+                itemBuilder: (BuildContext context){
+                  return vehicles.map((v)=>
+                    new PopupMenuItem<Vehicle>(
+                      value: v,
+                      child: new Text(v.name),
+                    )
+                  ).toList();
                 },
               ),
               new TextFormField(

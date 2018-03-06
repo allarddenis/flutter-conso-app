@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
       case transportDataChoice:
         Navigator.of(context).pushNamed("/AddTransportDataPage");
       break;
-    };
-}
+    }
+  }
 
 }

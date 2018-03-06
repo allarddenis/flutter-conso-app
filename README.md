@@ -10,7 +10,6 @@ For help getting started with Flutter, view the online
 ## TO DO
 
 - Datetime support
-- Vehicle choice in transport data
 - Update & deletion of vehicles & data
 - Details page for vehicles & data
 - Change fonts
