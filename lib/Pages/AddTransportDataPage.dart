@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../Utils/TransportData.dart';
 import '../Utils/StorageService.dart';
 import 'dart:core';
-import '../main.dart' as main;
 
 class AddTransportDataPage extends StatefulWidget {
 
@@ -24,18 +23,13 @@ class _AddTransportDataPage extends State<AddTransportDataPage> {
 
   void _submit() {
     final form = formKey.currentState;
-
     if (form.validate()) {
       form.save();
-
-      // Email & password matched our validation rules
-      // and are saved to _email and _password fields.
       _performAddAction();
     } else {
       final snackbar = new SnackBar(
         content: new Text('Please verify inputs are correct.'),
       );
-
       scaffoldKey.currentState.showSnackBar(snackbar);
     }
   }

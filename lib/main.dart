@@ -3,10 +3,11 @@ import './Utils/StorageService.dart';
 
 // Pages
 import 'Pages/AddTransportDataPage.dart';
+import 'Pages/AddVehiclePage.dart';
 import 'Pages/TransportDataListPage.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/LoginPage.dart';
-import 'Pages/VehiclePage.dart';
+import 'Pages/VehicleListPage.dart';
 
 void main() {
 
@@ -19,7 +20,8 @@ void main() {
       "/AddTransportDataPage":(material.BuildContext context) => new AddTransportDataPage(),
       "/TransportDataListPage":(material.BuildContext context) => new TransportDataListPage(),
       "/LoginPage":(material.BuildContext context) => new LoginPage(),
-      "/VehiclePage":(material.BuildContext context) => new VehiclePage(),
+      "/VehiclePage":(material.BuildContext context) => new VehicleListPage(),
+      "/AddVehiclePage":(material.BuildContext context) => new AddVehiclePage(),
     },
   ));
 }

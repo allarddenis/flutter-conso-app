@@ -44,12 +44,12 @@ class TransportData extends Storable {
 
   Map toMap() { 
     Map map = new Map();
-    map["id"] = id;
-    map["vehicleId"] = vehicleId;
-    map["comment"] = comment;
-    map["quantity"] = quantity;
-    map["cost"] = cost;
-    map["distance"] = distance;
+    map[columnId] = id;
+    map[columnVehicleId] = vehicleId;
+    map[columnComment] = comment;
+    map[columnQuantity] = quantity;
+    map[columnCost] = cost;
+    map[columnDistance] = distance;
     return map;
   } 
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../UI/MenuCardItem.dart';
+import 'dart:async';
 
 class HomePage extends StatelessWidget {
   @override
@@ -11,7 +12,8 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.brown,
         child: new Icon(Icons.add),
         onPressed: (){
-          Navigator.of(context).pushNamed("/AddTransportDataPage");
+          _addButton(context);
+          //Navigator.of(context).pushNamed("/AddTransportDataPage");
         }
       ),
       body: new Container(
@@ -42,4 +44,38 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  Future<Null> _addButton(BuildContext context) async {
+    const String vehicleChoice = "Vehicle";
+    const String transportDataChoice = 'Transport data';
+    switch (
+      await showDialog<String>(
+        context: context,
+        child: new SimpleDialog(
+          title: const Text('What to add ?'),
+          children: <Widget>[
+            new SimpleDialogOption(
+              onPressed: () { 
+                Navigator.pop(context, vehicleChoice);
+              },
+              child: const Text(vehicleChoice),
+            ),
+            new SimpleDialogOption(
+              onPressed: () { 
+                Navigator.pop(context, transportDataChoice);
+              },
+              child: const Text(transportDataChoice),
+            ),
+          ],
+        ),
+    )){
+      case vehicleChoice:
+        Navigator.of(context).pushNamed("/AddVehiclePage");
+      break;
+      case transportDataChoice:
+        Navigator.of(context).pushNamed("/AddTransportDataPage");
+      break;
+    };
+}
+
 }
