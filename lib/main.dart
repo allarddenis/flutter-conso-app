@@ -2,12 +2,12 @@ import 'package:flutter/material.dart' as material;
 import './Utils/StorageService.dart';
 
 // Pages
-import 'Pages/AddTransportDataPage.dart';
-import 'Pages/AddVehiclePage.dart';
-import 'Pages/TransportDataListPage.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/LoginPage.dart';
-import 'Pages/VehicleListPage.dart';
+import 'Pages/Vehicles/VehicleListPage.dart';
+import 'Pages/Vehicles/AddVehiclePage.dart';
+import 'Pages/Transport-data/AddTransportDataPage.dart';
+import 'Pages/Transport-data/TransportDataListPage.dart';
 
 void main() {
 
@@ -20,7 +20,7 @@ void main() {
       "/AddTransportDataPage":(material.BuildContext context) => new AddTransportDataPage(),
       "/TransportDataListPage":(material.BuildContext context) => new TransportDataListPage(),
       "/LoginPage":(material.BuildContext context) => new LoginPage(),
-      "/VehiclePage":(material.BuildContext context) => new VehicleListPage(),
+      "/VehicleListPage":(material.BuildContext context) => new VehicleListPage(),
       "/AddVehiclePage":(material.BuildContext context) => new AddVehiclePage(),
     },
   ));
