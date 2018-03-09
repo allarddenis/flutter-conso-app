@@ -9,12 +9,7 @@ For help getting started with Flutter, view the online
 
 ## TO DO
 
-- Datetime support
-- Update & deletion of vehicles & data
-- Details page for vehicles & data
-- Change fonts
-- Add images & animations
-- Beautify everything
+- Deletion of vehicles & data
 
 ## Screenshots
 

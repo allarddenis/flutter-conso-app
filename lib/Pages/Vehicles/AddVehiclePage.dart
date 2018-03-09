@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../Utils/Vehicle.dart';
-import '../Utils/StorageService.dart';
+import '../../Utils/Vehicle.dart';
+import '../../Utils/StorageService.dart';
 import 'dart:core';
 
 class AddVehiclePage extends StatefulWidget {
@@ -39,7 +39,7 @@ class _AddVehiclePage extends State<AddVehiclePage> {
       content: new Text('Adding vehicle...'),
     );
     scaffoldKey.currentState.showSnackBar(snackbar);
-    this.storageService.saveData(vehicle).then((val){
+    this.storageService.insertData(vehicle).then((val){
       final snackbarOK = new SnackBar(
         content: new Text('Vehicle successfully added !'),
         action: new SnackBarAction(

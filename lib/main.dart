@@ -1,27 +1,25 @@
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 import './Utils/StorageService.dart';
 
 // Pages
-import 'Pages/AddTransportDataPage.dart';
-import 'Pages/AddVehiclePage.dart';
-import 'Pages/TransportDataListPage.dart';
 import 'Pages/HomePage.dart';
-import 'Pages/LoginPage.dart';
-import 'Pages/VehicleListPage.dart';
+import 'Pages/Vehicles/VehicleListPage.dart';
+import 'Pages/Data/DataListPage.dart';
 
 void main() {
 
   var storageService = new StorageService();
   var db = storageService.db;
 
-  material.runApp(new material.MaterialApp(
+  runApp(new MaterialApp(
     home: new HomePage(),
-    routes: <String, material.WidgetBuilder>{
-      "/AddTransportDataPage":(material.BuildContext context) => new AddTransportDataPage(),
-      "/TransportDataListPage":(material.BuildContext context) => new TransportDataListPage(),
-      "/LoginPage":(material.BuildContext context) => new LoginPage(),
-      "/VehiclePage":(material.BuildContext context) => new VehicleListPage(),
-      "/AddVehiclePage":(material.BuildContext context) => new AddVehiclePage(),
+    theme: new ThemeData(
+      primaryColor: Colors.brown[400],
+      accentColor: Colors.brown[900],
+    ),
+    routes: <String, WidgetBuilder>{
+      "/DataListPage":(BuildContext context) => new DataListPage(),
+      "/VehicleListPage":(BuildContext context) => new VehicleListPage(),
     },
   ));
 }

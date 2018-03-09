@@ -1,4 +1,4 @@
-import 'TransportData.dart';
+import 'Data.dart';
 import 'Vehicle.dart';
 import 'Storable.dart';
 
@@ -16,7 +16,6 @@ class StorageService {
   static Database _db;
 
   Future<Database> get db async {
-    print('getting storage service');
     if(_db != null)
       return _db;
     _db = await initDb();
@@ -26,25 +25,37 @@ class StorageService {
   StorageService.internal();
 
   initDb() async {
-    print('init db...');
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "conso.db");
     var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    
+    /*
+    Vehicle v1 = new Vehicle();
+    v1.name = '208';
+    v1.gasType = 'Diesel';
+    v1.comment = 'Best car';
+    insertData(v1);
+    
+    Vehicle v2 = new Vehicle();
+    v2.name = '207';
+    v2.gasType = 'Diesel';
+    v2.comment = 'Old car';
+    insertData(v2);
+    */
+    
     return theDb;
   }
   
   void _onCreate(Database db, int version) async {
-    await this.createTransportDataTable(db);
+    await this.createDataTable(db);
     await this.createVehicleTable(db);
   }
 
-  Future createTransportDataTable(Database db) async {
-    print('create transport data table');
-    await db.execute(new TransportData().sqlCreateTable());
+  Future createDataTable(Database db) async {
+    await db.execute(new Data().sqlCreateTable());
   }
 
   Future createVehicleTable(Database db) async {
-    print('create vehicle data table');
     await db.execute(new Vehicle().sqlCreateTable());
   }
 
@@ -61,9 +72,15 @@ class StorageService {
     return null;
   }
 
-  Future<int> saveData(Storable storable) async {
+  Future<int> insertData(Storable storable) async {
     var dbClient = await db;
     int res = await dbClient.insert(storable.sqlTableName(), storable.toMap());
+    return res;
+  }
+
+  Future<int> updateData(Storable storable) async {
+    var dbClient = await db;
+    int res = await dbClient.update(storable.sqlTableName(), storable.toMap());
     return res;
   }
 

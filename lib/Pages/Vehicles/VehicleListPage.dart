@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../Utils/Vehicle.dart';
-import '../Utils/StorageService.dart';
-import '../UI/VehicleListItem.dart';
+import '../../Utils/Vehicle.dart';
+import '../../Utils/StorageService.dart';
+import '../../UI/VehicleListItem.dart';
 
 class VehicleListPage extends StatefulWidget {
 
@@ -44,11 +44,14 @@ class VehicleListState extends State<VehicleListPage>{
           });
         }
       ),
-      body: new ListView.builder(
-        itemCount: vehicles.length,
-        itemBuilder: (BuildContext context, int index){
-          return new VehicleListItem(vehicle: vehicles[index],);
-        },
-      ));
+      body: new Container(
+        child: new ListView.builder(
+          itemCount: vehicles.length,
+          itemBuilder: (BuildContext context, int index){
+            return new VehicleListItem(vehicle: vehicles[index],);
+          },
+        ),
+      )
+    );
   }
 }
