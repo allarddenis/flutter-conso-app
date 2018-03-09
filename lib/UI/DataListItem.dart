@@ -1,39 +1,79 @@
 import 'package:flutter/material.dart';
 import '../Utils/Data.dart';
+import 'package:intl/intl.dart';
 
 class DataListItem extends StatelessWidget {
-  DataListItem({this.data});
+  
+  DataListItem({this.data, this.onTap});
 
   final Data data;
+  final Function onTap;
 
   @override
-  Widget build(
-    BuildContext context,
-  ) {
-    return new Container(
-      padding: new EdgeInsets.only(bottom: 1.0),
-        child: new Card(
-          child: new Container(
-            padding: new EdgeInsets.all(20.0),
-            child: new Column(
+  Widget build(BuildContext context) {
+    return new Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: new Container(
+        decoration: new BoxDecoration(
+          color: Colors.white.withOpacity(0.80),
+          borderRadius: new BorderRadius.circular(10.0),
+          boxShadow: <BoxShadow>[
+        new BoxShadow(
+          spreadRadius: 2.0,
+          blurRadius: 10.0,
+          color: Colors.black26,
+        ),
+      ],
+        ),
+        child: new Tooltip(
+          message: data.comment,
+          child : new ListTile(
+            title: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                new ListTile(
-                  title: new Text(data.toTitle(),
-                  style: new TextStyle(fontWeight: FontWeight.w500)),
-                  subtitle: new Text(data.comment),
-                  trailing: new Row(
-                    children: <Widget>[
-                      new Icon(Icons.directions_car),
-                      new Text(data.vehicleId.toString())
-                    ],
+                new Chip(
+                  avatar: new CircleAvatar(
+                    child: new Icon(Icons.calendar_today, color: Colors.brown[100], size: 20.0,),
                   ),
-                  leading: new Icon(
-                    Icons.local_gas_station,
-                    color: Colors.brown[600],
+                  backgroundColor: Colors.brown[300],
+                  label: new Text(
+                    new DateFormat('dd/MM/yyyy').format(data.date),
+                    style: new TextStyle(color: Colors.brown[50]),
                   ),
                 ),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    new Text(
+                      data.efficiency().toString(),
+                      textAlign: TextAlign.start,
+                      style: new TextStyle(
+                        fontFamily: 'Pacifico',
+                        fontSize: 20.0
+                      )
+                    ),
+                    new Text(
+                      ' l /100km',
+                      textAlign: TextAlign.start,
+                      style: new TextStyle(
+                        fontFamily: 'Pacifico',
+                        fontSize: 15.0,
+                        color: Colors.brown[400]
+                      )
+                    ),
+                  ],
+                )
               ],
             ),
-    )));
+            trailing: new IconButton(
+              icon: new Icon(Icons.mode_edit),
+              onPressed: onTap,
+            )
+          ),
+        )
+      ),
+    );
   }
 }

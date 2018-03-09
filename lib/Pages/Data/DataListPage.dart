@@ -43,42 +43,39 @@ class DataListState extends State<DataListPage> {
   }
 
   Future _openAddDataDialog() async {
-    Data data = await Navigator.of(context).push(new MaterialPageRoute<Data>(
+    await Navigator.of(context).push(new MaterialPageRoute<bool>(
         builder: (BuildContext context) {
           return new DataDialog.add(new Data());
         },
       fullscreenDialog: true
-    ));
-    if (data != null) {
-      this.storageService.insertData(data).then((val){
+    )).then((val){
+      if(val != null && val){
         getData();
-      });
-    }
+      }
+    });
   }
 
   Future _openUpdateDataDialog(Data dataToEdit) async {
-    Data data = await Navigator.of(context).push(new MaterialPageRoute<Data>(
+    await Navigator.of(context).push(new MaterialPageRoute<bool>(
         builder: (BuildContext context) {
           return new DataDialog.edit(dataToEdit);
         },
       fullscreenDialog: true
-    ));
-    if (data != null) {
-      this.storageService.updateData(data).then((val){
+    )).then((val){
+      if(val != null && val){
         getData();
-      });
-    }
+      }
+    }); 
   }
 
   Widget _buildContent(BuildContext context) {
     return new ListView.builder(
+      padding: const EdgeInsets.all(5.0),
       itemCount: data.length,
       itemBuilder: (BuildContext context, int index) {
-        return new GestureDetector(
+        return new DataListItem(
+          data: data[index],
           onTap: () => _openUpdateDataDialog(data[index]),
-          child: new DataListItem(
-            data: data[index],
-          )
         );
       },
     );

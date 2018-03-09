@@ -39,6 +39,10 @@ class Data extends Storable {
       $columnDate text not null)
     ''';
 
+  String efficiency(){
+    return (quantity * 100 / distance).toStringAsPrecision(3);
+  }
+
   String toTitle(){
     return quantity.toString() + 'L  |  ' 
       + cost.toString() + '€  |  ' 

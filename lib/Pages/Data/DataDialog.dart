@@ -90,15 +90,27 @@ class DataDialogState extends State<DataDialog> {
     final form = formKey.currentState;
     if (form.validate()) {
       form.save();
-      var data = new Data();
-      data.vehicleId = vehicleId;
-      data.quantity = quantity;
-      data.cost = cost;
-      data.distance = distance;
-      data.comment = comment;
-      data.date = date;
-      Navigator.of(context).pop(data);
+      var dataSubmitted = new Data();
+      dataSubmitted.id = data.id;
+      dataSubmitted.vehicleId = vehicleId;
+      dataSubmitted.quantity = quantity;
+      dataSubmitted.cost = cost;
+      dataSubmitted.distance = distance;
+      dataSubmitted.comment = comment;
+      dataSubmitted.date = date;
+      var storageService = new StorageService();
+      
+      if(action == 'Update') storageService.updateData(dataSubmitted);
+      else if(action == 'New') storageService.insertData(dataSubmitted);
+      Navigator.of(context).pop(true);
     } else {}
+  }
+
+  _deleteData(){
+    var storageService = new StorageService();
+    storageService.deleteData(data).then((val)=>
+      Navigator.of(context).pop(true)
+    );
   }
 
   Widget trailingText(String text){
@@ -168,9 +180,77 @@ class DataDialogState extends State<DataDialog> {
               ),
             ),
           )))
-        )
+        ),
+        _buildDeleteElement(context)
       ]
     );
+  }
+
+  Widget _buildDeleteElement(BuildContext context){
+    if(action != null && action == 'Update'){
+      return new Container(
+        margin: const EdgeInsets.only(top: 50.0, left: 25.0, right: 25.0),
+        child: new Opacity(
+          opacity: 0.90,
+          child: new GestureDetector(
+            onTap: () => _showDeleteDialog(context),
+            child: new Card(
+              elevation: 0.1,
+              color: Colors.red[50],
+              child: new Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: new ListTile(
+                  leading: new CircleAvatar(
+                    backgroundColor: Colors.redAccent[200],
+                    child: new Icon(Icons.delete, color: Colors.red[50],),
+                  ),
+                  title: new Text(
+                    'Delete data',
+                    style: new TextStyle(
+                      color: Colors.redAccent[200],
+                      fontFamily: 'Pacifico',
+                      fontSize: 23.0
+                    ),
+                  ),
+                )
+              )
+            )
+          )
+        ),
+      );
+    }
+    else{
+      return new Text('');
+    }
+  }
+
+  _showDeleteDialog(BuildContext context){
+    showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      child: new AlertDialog(
+        title: new Text(
+          'Delete this data ?',
+          style: new TextStyle(
+            color: Colors.redAccent[200],
+          ),
+        ),
+        content: new Text('This action cannot be reverted !'),
+        actions: <Widget>[
+          new RaisedButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: new Text('NO'),
+          ),
+          new RaisedButton(
+            color: Colors.redAccent[200],
+            onPressed: () => Navigator.pop(context, true),
+            child: new Text('YES'),
+          )
+        ],
+      )
+    ).then((val){
+      if(val) _deleteData();
+    });
   }
 
   _showVehiclePicker(BuildContext context){

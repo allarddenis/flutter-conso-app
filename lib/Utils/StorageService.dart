@@ -80,7 +80,11 @@ class StorageService {
 
   Future<int> updateData(Storable storable) async {
     var dbClient = await db;
-    int res = await dbClient.update(storable.sqlTableName(), storable.toMap());
+    int res = await dbClient.update(
+      storable.sqlTableName(), 
+      storable.toMap(),
+      where: storable.sqlPrimarykeyColumn() + " = ?", 
+      whereArgs: [storable.getPrimaryKey()]);
     return res;
   }
 
