@@ -123,14 +123,12 @@ class DataDialogState extends State<DataDialog> {
       children: <Widget>[
         new Container(
           margin: const EdgeInsets.only(top: 50.0, left: 25.0, right: 25.0),
-          child: new Opacity(
-            opacity: 0.90,
-            child:
-          new Card(
-            elevation: 0.1,
-            color: Colors.brown[50],
-            child: new Padding(
-            padding: const EdgeInsets.all(30.0),
+          child: new Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: new BoxDecoration(
+              color: Colors.white.withOpacity(0.80),
+              borderRadius: new BorderRadius.circular(10.0)
+            ),
             child: new Form(
               key: formKey,
               child: new Column(
@@ -179,7 +177,7 @@ class DataDialogState extends State<DataDialog> {
                 ],
               ),
             ),
-          )))
+          ),
         ),
         _buildDeleteElement(context)
       ]
@@ -188,35 +186,32 @@ class DataDialogState extends State<DataDialog> {
 
   Widget _buildDeleteElement(BuildContext context){
     if(action != null && action == 'Update'){
-      return new Container(
-        margin: const EdgeInsets.only(top: 50.0, left: 25.0, right: 25.0),
-        child: new Opacity(
-          opacity: 0.90,
-          child: new GestureDetector(
-            onTap: () => _showDeleteDialog(context),
-            child: new Card(
-              elevation: 0.1,
-              color: Colors.red[50],
-              child: new Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: new ListTile(
-                  leading: new CircleAvatar(
-                    backgroundColor: Colors.redAccent[200],
-                    child: new Icon(Icons.delete, color: Colors.red[50],),
-                  ),
-                  title: new Text(
-                    'Delete data',
-                    style: new TextStyle(
-                      color: Colors.redAccent[200],
-                      fontFamily: 'Pacifico',
-                      fontSize: 23.0
-                    ),
-                  ),
-                )
-              )
+      return new GestureDetector(
+        onTap: () => _showDeleteDialog(context),
+        child: new Container(
+          margin: const EdgeInsets.only(top: 50.0, left: 25.0, right: 25.0),
+          child: new Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: new BoxDecoration(
+              color: Colors.red[50].withOpacity(0.80),
+              borderRadius: new BorderRadius.circular(10.0)
+            ),
+            child: new ListTile(
+              leading: new CircleAvatar(
+                backgroundColor: Colors.redAccent[200],
+                child: new Icon(Icons.delete, color: Colors.red[50],),
+              ),
+              title: new Text(
+                'Delete data',
+                style: new TextStyle(
+                  color: Colors.redAccent[200],
+                  fontFamily: 'Pacifico',
+                  fontSize: 23.0
+                ),
+              ),
             )
           )
-        ),
+        )
       );
     }
     else{

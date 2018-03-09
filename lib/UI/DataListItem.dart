@@ -18,12 +18,12 @@ class DataListItem extends StatelessWidget {
           color: Colors.white.withOpacity(0.80),
           borderRadius: new BorderRadius.circular(10.0),
           boxShadow: <BoxShadow>[
-        new BoxShadow(
-          spreadRadius: 2.0,
-          blurRadius: 10.0,
-          color: Colors.black26,
-        ),
-      ],
+            new BoxShadow(
+              spreadRadius: 2.0,
+              blurRadius: 10.0,
+              color: Colors.black26,
+            ),
+          ],
         ),
         child: new Tooltip(
           message: data.comment,
