@@ -118,8 +118,10 @@ class DataDialogState extends State<DataDialog> {
   }
 
   Widget _buildContent(BuildContext context) {
+    var focusNode = new FocusNode();
     getVehicles();
-    return new Column(
+    return new SingleChildScrollView( 
+      child: new Column(
       children: <Widget>[
         new Container(
           margin: const EdgeInsets.only(top: 50.0, left: 25.0, right: 25.0),
@@ -167,21 +169,24 @@ class DataDialogState extends State<DataDialog> {
                     onTap: () => _showDoublePicker(context, 'Distance'),
                   ),
                   new TextFormField(
+                    maxLines: 2,
+                    focusNode: focusNode,
                     decoration: new InputDecoration(
                       labelText: 'Comment (<50 caracters)'),
                     validator: (val) => val.length > 50
                       ? 'Comment is too long : <50 caracters'
                       : null,
                     onSaved: (val) => setState(()=>comment = val),
+                    onFieldSubmitted: (val) => Navigator.of(context).focusScopeNode.requestFocus(focusNode),
                   ),
                 ],
               ),
             ),
           ),
         ),
-        _buildDeleteElement(context)
+        _buildDeleteElement(context),
       ]
-    );
+    ));
   }
 
   Widget _buildDeleteElement(BuildContext context){

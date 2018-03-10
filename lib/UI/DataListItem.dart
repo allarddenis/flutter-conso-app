@@ -39,7 +39,10 @@ class DataListItem extends StatelessWidget {
                   backgroundColor: Colors.brown[300],
                   label: new Text(
                     new DateFormat('dd/MM/yyyy').format(data.date),
-                    style: new TextStyle(color: Colors.brown[50]),
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.brown[50]
+                    ),
                   ),
                 ),
                 new Row(
@@ -51,7 +54,9 @@ class DataListItem extends StatelessWidget {
                       textAlign: TextAlign.start,
                       style: new TextStyle(
                         fontFamily: 'Pacifico',
-                        fontSize: 20.0
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.0,
+                        color: Colors.brown[900],
                       )
                     ),
                     new Text(
@@ -64,13 +69,14 @@ class DataListItem extends StatelessWidget {
                       )
                     ),
                   ],
+                ),
+                new IconButton(
+                  icon: new Icon(Icons.mode_edit),
+                  onPressed: onTap,
+                  color: Colors.brown[900],
                 )
               ],
             ),
-            trailing: new IconButton(
-              icon: new Icon(Icons.mode_edit),
-              onPressed: onTap,
-            )
           ),
         )
       ),

@@ -51,7 +51,7 @@ class StorageService {
     await this.createVehicleTable(db);
   }
 
-  Future createDataTable(Database db) async {
+  Future createDataTable(Database db) async { 
     await db.execute(new Data().sqlCreateTable());
   }
 
