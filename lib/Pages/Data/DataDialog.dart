@@ -169,6 +169,7 @@ class DataDialogState extends State<DataDialog> {
                     onTap: () => _showDoublePicker(context, 'Distance'),
                   ),
                   new TextFormField(
+                    initialValue: comment,
                     maxLines: 2,
                     focusNode: focusNode,
                     decoration: new InputDecoration(
