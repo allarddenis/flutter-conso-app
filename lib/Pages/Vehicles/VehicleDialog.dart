@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:numberpicker/numberpicker.dart';
 import '../BaseWidget.dart';
 import '../../Utils/Vehicle.dart';
-import '../../UI/DateTimeItem.dart';
 import '../../Utils/StorageService.dart';
 
 class VehicleDialog extends StatefulWidget {
@@ -79,8 +77,8 @@ class VehicleDialogState extends State<VehicleDialog> {
     if (form.validate()) {
       form.save();
       var vehicleSubmitted = new Vehicle();
-      vehicleSubmitted.id = vehicle.id;
-      vehicleSubmitted.name = vehicle.name;
+      vehicleSubmitted.id = id;
+      vehicleSubmitted.name = name;
       vehicleSubmitted.comment = comment;
       vehicleSubmitted.gasType = gasType;
       var storageService = new StorageService();
@@ -121,16 +119,16 @@ class VehicleDialogState extends State<VehicleDialog> {
                 children: [
                   new TextFormField(
                     initialValue: name,
-                    decoration: new InputDecoration(labelText: 'Name (<50 caracters)'),
+                    decoration: new InputDecoration(labelText: 'Name (<25 caracters)'),
                     validator: (val) =>
-                      val.length > 50 ? 'Name is too long : <50 caracters' : null,
+                      val.length > 25 ? 'Name is too long : <25 caracters' : null,
                     onSaved: (val) => name = val,
                   ),
                   new TextFormField(
                     initialValue: gasType,
-                    decoration: new InputDecoration(labelText: 'Gas type (<50 caracters)'),
+                    decoration: new InputDecoration(labelText: 'Gas type (<10 caracters)'),
                     validator: (val) =>
-                      val.length > 50 ? 'Gas type is too long : <50 caracters' : null,
+                      val.length > 10 ? 'Gas type is too long : <10 caracters' : null,
                     onSaved: (val) => gasType = val,
                   ),
                   new TextFormField(

@@ -27,8 +27,8 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           new Expanded(
-            child: new GestureDetector(
-              onTap: ()=>Navigator.of(context).pushNamed("/DataListPage"),
+            child: new InkWell(
+              onTap: () => Navigator.of(context).pushNamed("/DataListPage"),
               child: dataWidget(textSize: 30.0)
             )
           ),
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
             height: 1.0,
           ),
           new Expanded(
-            child: new GestureDetector(
+            child: new InkWell(
               onTap: ()=>Navigator.of(context).pushNamed("/VehicleListPage"),
               child: vehiclesWidget(textSize: 30.0)
             )

@@ -7,10 +7,6 @@ A Flutter app for gas consumptiom tracking.
 For help getting started with Flutter, view the online
 [documentation](https://flutter.io/).
 
-## TO DO
-
-- Deletion of vehicles & data
-
 ## Screenshots
 
 <div style="text-align: center"><table><tr>

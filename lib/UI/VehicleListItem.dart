@@ -33,10 +33,20 @@ class VehicleListItem extends StatelessWidget {
               children: <Widget>[
                 new Chip(
                   avatar: new CircleAvatar(
-                    child: new Icon(Icons.opacity, color: Colors.brown[100], size: 20.0,),
+                    child: new Icon(
+                      Icons.opacity, 
+                      color: Colors.brown[100], 
+                      size: 20.0,
+                    ),
                   ),
                   backgroundColor: Colors.brown[300],
-                  label: new Text(vehicle.gasType),
+                  label: new Text(
+                    vehicle.gasType,
+                    style: new TextStyle(
+                      color: Colors.brown[50],
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
                 ),
                 new Text(
                   vehicle.name,
