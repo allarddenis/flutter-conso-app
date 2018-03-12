@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import './BaseWidget.dart';
 import '../UI/MainItemWidget.dart';
+import 'Data/DataDialog.dart';
+import 'Vehicles/VehicleDialog.dart';
+import '../Utils/Data.dart';
+import '../Utils/Vehicle.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -50,36 +54,82 @@ class HomePage extends StatelessWidget {
   }
 
   Future<Null> _addButton(BuildContext context) async {
-    const String vehicleChoice = "Vehicle";
-    const String dataChoice = 'Data';
-    switch (
-      await showDialog<String>(
-        context: context,
-        child: new SimpleDialog(
-          title: const Text('What to add ?'),
-          children: <Widget>[
-            new SimpleDialogOption(
-              onPressed: () { 
-                Navigator.pop(context, vehicleChoice);
-              },
-              child: const Text(vehicleChoice),
-            ),
-            new SimpleDialogOption(
-              onPressed: () { 
-                Navigator.pop(context, dataChoice);
-              },
-              child: const Text(dataChoice),
-            ),
-          ],
+    await showDialog<dynamic>(
+      context: context,
+      child: _buildAddDialogContent(context)
+    );
+  }
+
+  Future _openAddDataDialog(BuildContext context) async {
+    await Navigator.of(context).push(new MaterialPageRoute<bool>(
+        builder: (BuildContext context) {
+          return new DataDialog.add(new Data());
+        },
+      fullscreenDialog: true
+    ));
+  }
+
+  Future _openAddVehicleDialog(BuildContext context) async {
+    await Navigator.of(context).push(new MaterialPageRoute<bool>(
+        builder: (BuildContext context) {
+          return new VehicleDialog.add(new Vehicle());
+        },
+      fullscreenDialog: true
+    ));
+  }
+
+  Widget _buildAddDialogContent(BuildContext context){
+    return new SimpleDialog(
+      title: new Text(
+        "What to add ?",
+        style: new TextStyle(
+          fontFamily: 'Pacifico',
+          color: Colors.brown[900]
         ),
-    )){
-      case vehicleChoice:
-        Navigator.of(context).pushNamed("/AddVehiclePage");
-      break;
-      case dataChoice:
-        Navigator.of(context).pushNamed("/AddDataPage");
-      break;
-    }
+      ),
+      children: <Widget>[
+        new ListTile(
+          onTap: (){
+            Navigator.of(context).pop();
+            _openAddDataDialog(context);
+          },
+          leading: new CircleAvatar(
+            backgroundColor: Colors.brown[600],
+            child: new Icon(
+              Icons.local_gas_station,
+              color: Colors.brown[50],
+            ),
+          ),
+          title: new Text(
+            "New consumption data",
+            style: new TextStyle(
+              fontFamily: 'Pacifico',
+              color: Colors.brown[600]
+            ),
+          ),
+        ),
+        new ListTile(
+          onTap: (){
+            Navigator.of(context).pop();
+            _openAddVehicleDialog(context);
+          },
+          leading: new CircleAvatar(
+            backgroundColor: Colors.brown[600],
+            child: new Icon(
+              Icons.directions_car,
+              color: Colors.brown[50],
+            ),
+          ),
+          title: new Text(
+            "New vehicle",
+            style: new TextStyle(
+              fontFamily: 'Pacifico',
+              color: Colors.brown[600]
+            ),
+          ),
+        )
+      ],
+    );
   }
 
 }
