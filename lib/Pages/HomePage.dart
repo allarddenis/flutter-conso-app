@@ -10,7 +10,10 @@ import '../Utils/StorageService.dart';
 
 class HomePage extends StatelessWidget {
 
+  bool notChecked = true;
+
   void verifyVehicles(BuildContext context){
+    notChecked = false;
     var storageService = new StorageService();
     storageService.getAll(new Vehicle()).then((val){
       if(val.length <= 0) showNoVehiclesDialog(context);
@@ -49,7 +52,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    verifyVehicles(context);
+    if(notChecked) verifyVehicles(context);
     return buildBackground(
       content: _buildContent(context), 
       title: 'Conso App',

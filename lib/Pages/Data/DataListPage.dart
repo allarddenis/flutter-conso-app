@@ -31,9 +31,13 @@ class DataListState extends State<DataListPage> {
     super.initState();
   }
 
-  void verifyVehicles(BuildContext context){
-    storageService.getAll(new Vehicle()).then((val){
-      if(val.length <= 0) showNoVehiclesDialog(context);
+  Future<bool> verifyVehicles(BuildContext context) async {
+    return await storageService.getAll(new Vehicle()).then((val){
+      if(val.length <= 0){
+        showNoVehiclesDialog(context);
+        return false;
+      }
+      else return true;
     });
   }
 
@@ -91,16 +95,19 @@ class DataListState extends State<DataListPage> {
   }
 
   Future _openAddDataDialog() async {
-    await Navigator.of(context).push(new MaterialPageRoute<bool>(
+    var checked = await verifyVehicles(context);
+    if(checked){
+      Navigator.of(context).push(new MaterialPageRoute<bool>(
         builder: (BuildContext context) {
           return new DataDialog.add(new Data());
         },
-      fullscreenDialog: true
-    )).then((val){
-      if(val != null && val){
-        getData();
-      }
-    });
+        fullscreenDialog: true
+      )).then((val){
+        if(val != null && val){
+          getData();
+        }
+      });
+    }
   }
 
   Future _openUpdateDataDialog(Data dataToEdit) async {
