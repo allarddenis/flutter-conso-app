@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../Utils/Data.dart';
+import '../../Utils/Vehicle.dart';
 import '../../Utils/StorageService.dart';
 import '../../UI/DataListItem.dart';
 import '../BaseWidget.dart';
 import 'dart:async';
 import './DataDialog.dart';
+import '../Vehicles/VehicleDialog.dart';
 
 class DataListPage extends StatefulWidget {
   @override
@@ -25,7 +27,53 @@ class DataListState extends State<DataListPage> {
   void initState() {
     storageService = new StorageService();
     getData();
+    verifyVehicles(context);
     super.initState();
+  }
+
+  void verifyVehicles(BuildContext context){
+    storageService.getAll(new Vehicle()).then((val){
+      if(val.length <= 0) showNoVehiclesDialog(context);
+    });
+  }
+
+  void showNoVehiclesDialog(BuildContext context) async {
+    await showDialog<bool>(
+      context: context,
+      child: new AlertDialog(
+        title: new Text(
+          "First, add a vehicle !",
+          style: new TextStyle(
+            fontFamily: 'Pacifico',
+            color: Colors.brown[900]
+          ),
+        ),
+        content: new Text(
+          "It's so simple..",
+          style: new TextStyle(
+            fontFamily: 'Pacifico',
+            color: Colors.brown[900]
+          ),
+        ),
+        actions: <Widget>[
+          new RaisedButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: new Text('OK'),
+          ),
+        ],
+      )
+    ).then((val){
+      _openAddVehicleDialog(context);
+    });
+  }
+
+  Future _openAddVehicleDialog(BuildContext context) async {
+    await Navigator.of(context).push(new MaterialPageRoute<bool>(
+        builder: (BuildContext context) {
+          return new VehicleDialog.add(new Vehicle());
+        },
+      fullscreenDialog: true
+    ));
   }
 
   @override
