@@ -67,8 +67,8 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context){
-    return new Container(
-      padding: new EdgeInsets.all(15.0),
+    return new Material(
+      color: Colors.transparent,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
           ),
           new Container(
             color: Colors.white.withOpacity(0.85),
-            margin: const EdgeInsets.symmetric(vertical: 16.0),
+            margin: const EdgeInsets.symmetric(horizontal: 15.0),
             width: 225.0,
             height: 1.0,
           ),
