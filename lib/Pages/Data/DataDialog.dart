@@ -153,7 +153,7 @@ class DataDialogState extends State<DataDialog> {
                   new ListTile(
                     leading: new Icon(Icons.opacity, color: Colors.brown[400]),
                     title: new Text('$quantity'),
-                    trailing: trailingText('quantity'),
+                    trailing: trailingText('liters'),
                     onTap: () => _showDoublePicker(context, 'Quantity'),
                   ),
                   new ListTile(
@@ -165,7 +165,7 @@ class DataDialogState extends State<DataDialog> {
                   new ListTile(
                     leading: new Icon(Icons.directions, color: Colors.brown[400]),
                     title: new Text('$distance'),
-                    trailing: trailingText('distance'),
+                    trailing: trailingText('km'),
                     onTap: () => _showDoublePicker(context, 'Distance'),
                   ),
                   new TextFormField(

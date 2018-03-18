@@ -61,6 +61,7 @@ class DataListState extends State<DataListPage> {
         ),
         actions: <Widget>[
           new RaisedButton(
+            color: Colors.brown[100],
             onPressed: () => Navigator.pop(context, true),
             child: new Text('OK'),
           ),
